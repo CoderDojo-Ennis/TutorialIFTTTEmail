@@ -196,7 +196,7 @@
       <p>Anything that can create a web POST request can be used to trigger our applet. In my example, I'm going to run a little javascript to do this.</p>
       <p>Below is my html and javascript on the left, and you can see this running on the right<p> 
       <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-9">
           <pre>
             <code>
 &lt;form">
@@ -204,16 +204,46 @@
   &lt;textarea id="FeedbackInput">&lt;/textarea>
   &lt;button onclick="sendit()">Send&lt;/button>
 &lt;/form>
+&lt;script>
+  function sendit() {
+    var message = document.getElementById("FeedbackInput").value;
+    var key = "be3KEzxgue_zy3H4rfg9v8";
+    var message_name = "send_feedback";
+    var url = "https://maker.ifttt.com/trigger/" + message_name + "/with/key/" + key;
+    $.ajax({  
+      url: url,
+      data: { value1: message },
+      dataType: "jsonp",
+      complete: function(jqXHR, textStatus) {
+        alert("Message Sent"); 
+      } 
+    });   
+  }
+&lt;/script>
             </code>
           </pre>
         </div>
-        <div class="col-sm-6" style="padding:0 10px;">
+        <div class="col-sm-3" style="padding:0 10px;">
           <div style="border: solid 1px #040;padding: 10px;">
             <label>Feedback:</label>
             <textarea id="FeedbackInput"></textarea>
             <button onclick="sendit()">Send</button>
           </div>
           <script>
+            function sendit() {
+              var message = document.getElementById("FeedbackInput").value;
+              var key = "be3KEzxgue_zy3H4rfg9v8";
+              var message_name = "send_feedback";
+              var url = "https://maker.ifttt.com/trigger/" + message_name + "/with/key/" + key;
+              $.ajax({  
+                url: url,
+                data: { value1: message },
+                dataType: "jsonp",
+                complete: function(jqXHR, textStatus) {
+                  alert("Message Sent"); 
+                } 
+              });   
+            }
           </script>
         </div>
       </div>
