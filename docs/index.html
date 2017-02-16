@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>Use IFTTT to send a Gmail</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     /* Remove the navbar's default margin-bottom and rounded borders */ 
     .navbar {
       margin-bottom: 0;
@@ -30,7 +34,48 @@
       background-color: #f1f1f1;
       height: 100%;
     }
+
+    hr {
+      clear: both;
+      margin: 10px auto;
+    }
+
+    h1 {
+      clear: both;
+    }
+
+    img {
+      max-width: 40%;
+      display: block;
+      margin: 0 0 10px 10px;
+    }
     
+    blink {
+      animation: blink-animation 1s steps(5, start) infinite;
+      -webkit-animation: blink-animation 1s steps(5, start) infinite;
+    }
+    @keyframes blink-animation {
+      to {
+        visibility: hidden;
+      }
+    }
+    @-webkit-keyframes blink-animation {
+      to {
+        visibility: hidden;
+      }
+    }
+
+    pre{
+      font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+      margin-bottom: 10px;
+      overflow: auto;
+      width: auto;
+      padding: 5px;
+      background-color: #030;
+      color: white;
+      width: 100%;
+    }
+
     /* Set black background color, white text and some padding */
     footer {
       background-color: #555;
@@ -65,13 +110,119 @@
   <div class="row content">
     <div class="col-sm-2 sidenav">
       <p><a href="#">Introduction</a></p>
-      <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p>
+      <p><a href="#IFTTTAccount">IFTTT Account</a></p>
+      <p><a href="#MakerService">Maker Service</a></p>
+      <p><a href="#GmailService">GMail Service</a></p>
+      <p><a href="#CreateApplet">Create An Applet</a></p>
+      <p><a href="#TriggerIt">Trigger It!</a></p>
+      <p><a href="#OtherOptions">Other Options</a></p>
     </div>
-    <div class="col-sm-10 text-left"> 
+    <div class="col-sm-10 text-left">
+
+      <!-- INTRO -->
       <h1>Introduction</h1>
       <p>In this tutorial we will configure <a target="_blank" href="https://ifttt.com/">IFTTT</a> to send an email using a Gmail account whenever a special URL is hit.</p>
       <p>This could be triggered by a web application, a phone application, an Arduino or Raspberry Pi with internet access. Anything that can make a web post request</p>
+
+      <!-- IFTTT ACCOUNT -->
+      <h1 id="IFTTAccount">IFTTT Account</h1>
+      <p>IFTTT (If This Then That) is a free web service that allows you to set-up simple "applets" (previously known as recipes).  An applet has two parts:</p>
+      <ol>
+        <li>Trigger</li>
+        <li>Action</li>
+      </ol>
+      <p>In this example, the Trigger will be someone making a special web request. Have a browse over IFTTT and see all of the other possible trigger sources.</p>
+      <p>Our Action is going to be to send an email</p>
+      <p>Applets are owned by users of the IFTTT service. So to get started, we'll need to set-up an account.</p>
+      <hr />
+      <p>Go to <a target="_blank" href="https://ifttt.com/join">https://ifttt.com/join</a> and create an account using your email address. Or just sign-in if you already have an IFTTT account.</p>
+      <hr />
+      <img style="float:right" src="IFTTTUserMenu.png" />
+      <p>Once you're logged in, at the top right of the screen is your name. Click this to open the user menu. From here pick Services to see the list of services linked to your account.</p>
+
+      <!-- MAKER SERVICE -->
+      <h1 id="MakerService">Maker Service</h1>
+      <img src="MakerService.png" style="float: right" />
+      <p>On the All Services page you will see hundreds of service icons. There's a filter box at the top. Type "Maker" into the filter. The one on the left is what we're after. Click on this.</p>
+      <hr />
+      <img src="MakerSettings.png" style="float: right" />
+      <p>Inside the Maker Service is a Settings button at the top right.</p>
+      <hr />
+      <img src="MakerAccountInfo.png" style="float:right;" />
+      <p>Here you will see your account settings for the Maker service. Take note of the URL here (it's case sensitive). We're going to need that later. <strong>DO NOT PRESS</strong> the "Edit Connection" link <blink>EVER</blink>. This will generate a fresh URL for you, and any current applets that you have with the old URL will stop working!</p>
+
+      <!-- GMAIL SERVICE -->
+      <h1 id="GmailService">Gmail Service</h1>
+      <img src="GmailService.png" style="float: right" />
+      <p>Go back to the <a href="https://ifttt.com/search/services" target="_blank">IFTTT Services List</a> and search for GMail.</p>
+      <p>Once you click this, you'll have to log into the gmail account from which this applet will be sending its emails.</p>
+
+      <!-- APPLET -->
+      <h1 id="CreateApplet">Create An Applet</h1>
+      <img style="float:right" src="IFTTTUserMenu.png" />
+      <p>In your user menu select New Applet.</p>
+      <h2>If This</h2>
+      <p>Press the "THIS" part of the applet to set-up the trigger.</p>
+      <p>From the "Choose a service" prompt, search for "Maker" and select it.</p>
+      <p>This should have only one trigger available called "Receive a web request". Select it.</p>
+      <hr />
+      <img style="float:right" src="CreateTrigger.png" />
+      <p>In the "Event Name" prompt enter a reasonable name for the type of thing you're creating. This shold be all lowercase and not contain any spaces or special characters.</p>
+      <hr />
+      <h2>Then That</h2>
+      <p>Press the "THAT" part of the applet to set-up the action.</p>
+      <p>Search for Gmail, and select the only action "Send an Email".</p>
+      <hr />
+      <img style="float:right" src="EmailSettings.png" />
+      <p>This is where we configure the email that will be sent.</p>
+      <p>In the "To Address" put in the email address that you want the message to be delivered to.<p>
+      <p>The Maker trigger provides us with a few "ingredients". These are just variables.</p>
+      <ul>
+        <li>EventName = The name of the event we entered above. In my case, this would output "send_feedback"</li>
+        <li>OccurredAt = The date and time that the trigger event happened.</li>
+        <li>Value1 = A value that we can pass into the Maker trigger. In my example, I'll use this for the message.</li>
+        <li>Value2 = A value that we can pass into the Maker trigger.</li>
+        <li>Value3 = A value that we can pass into the Maker trigger.</li>
+      </ul>
+      <p>Format the subject and message however you like, optionally using the ingredients.<p>
+      <p>When you're done press the Create Action button.</p>
+      <p>Press the Finish button.</p>
+      <hr />
+      <img style="float:right" src="Appletdone.png" />
+      <p>Your applet will now appear in your applet list and will be active. You can use the gear icon on the top right to change any of the setting.</p>
+
+      <!-- Trigger It -->
+      <h1 id="TriggerIt">Trigger It!</h1>
+      <p>Anything that can create a web POST request can be used to trigger our applet. In my example, I'm going to run a little javascript to do this.</p>
+      <p>Below is my html and javascript on the left, and you can see this running on the right<p> 
+      <div class="row">
+        <div class="col-sm-6">
+          <pre>
+            <code>
+&lt;form">
+  &lt;label>Feedback:&lt;/label>
+  &lt;textarea id="FeedbackInput">&lt;/textarea>
+  &lt;button onclick="sendit()">Send&lt;/button>
+&lt;/form>
+            </code>
+          </pre>
+        </div>
+        <div class="col-sm-6" style="padding:0 10px;">
+          <div style="border: solid 1px #040;padding: 10px;">
+            <label>Feedback:</label>
+            <textarea id="FeedbackInput"></textarea>
+            <button onclick="sendit()">Send</button>
+          </div>
+          <script>
+          </script>
+        </div>
+      </div>
+
+      <!-- Other Options -->
+      <h1 id="OtherOptions">Other Options</h1>
+      <ul>
+        <li>Rather than using IFTTT, you could use <a href="https://flow.microsoft.com" target="_blank">Microsoft Flow</a>. It works pretty much the same.</li>
+      </ul>
     </div>
   </div>
 </div>
