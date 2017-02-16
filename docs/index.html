@@ -194,7 +194,7 @@
       <!-- Trigger It -->
       <h1 id="TriggerIt">Trigger It!</h1>
       <p>Anything that can create a web POST request can be used to trigger our applet. In my example, I'm going to run a little javascript to do this.</p>
-      <p>Below is my html and javascript on the left, and you can see this running on the right<p> 
+      <p>Below is my html and javascript on the left, and you can see this running on the right. This example relies on the jQuery javascript library to simplify the code a bit.<p> 
       <div class="row">
         <div class="col-sm-9">
           <pre>
@@ -207,8 +207,8 @@
 &lt;script>
   function sendit() {
     var message = document.getElementById("FeedbackInput").value;
-    var key = "be3KEzxgue_zy3H4rfg9v8";
-    var message_name = "send_feedback";
+    var key = "_______"; // &lt;&lt; YOUR KEY HERE
+    var message_name = "send_feedback";    // &lt;&lt; YOUR MESSAGE NAME HERE
     var url = "https://maker.ifttt.com/trigger/" + message_name + "/with/key/" + key;
     $.ajax({  
       url: url,
@@ -247,6 +247,7 @@
           </script>
         </div>
       </div>
+      <p>If using the above code, don't foget to put in your own Maker key, and message name values.</p>
 
       <!-- Other Options -->
       <h1 id="OtherOptions">Other Options</h1>
